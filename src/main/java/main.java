@@ -12,16 +12,18 @@ public class main {
 
         // mysql dao factory
         FactoryEntityManager factory_entity_manager = FactoryEntityManager.getEntityManagerFactory("MYSQL");
-        EntityManager entity_manager = factory_entity_manager.connect("d");
+        EntityManager entity_manager = factory_entity_manager.connect("integrador2");
 
         // daos
         DAOEstudiante estudiantedao = factory_entity_manager.getEstudianteDAO(entity_manager);
         factory_entity_manager.getEstudianteDAO(entity_manager);
 
         // objeto estudiante
-
         Estudiante estudiante = new Estudiante("prueba", "1","12/09/1997" , "hombre", "232434", "Olavarria", "3453453", false, new ArrayList<Carrera>());
         estudiantedao.insertEstudiante(estudiante);
+
+        // close
+        factory_entity_manager.close();
 
 
     }
