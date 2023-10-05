@@ -1,7 +1,7 @@
 package tp2.entidades;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "carrera")
@@ -20,7 +20,7 @@ public class Carrera {
     private int duracion;
 
     @ManyToMany
-    private Set<Estudiante> estudianteSet;
+    private List<Estudiante> estudianteSet;
 
     public Carrera(){}
 

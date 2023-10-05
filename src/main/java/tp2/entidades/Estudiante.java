@@ -1,7 +1,8 @@
 package tp2.entidades;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ public class Estudiante {
     private String apellido;
 
     @Column(name = "fecha_nacimiento")
-    private Date fecha_nacimiento;
+    private String fecha_nacimiento;
 
     @Column(name = "genero")
     private String genero;
@@ -39,15 +40,26 @@ public class Estudiante {
     private boolean graduado;
 
     @ManyToMany(mappedBy = "estudianteSet")
-    private Set<Carrera> carreraSet;
+    private List<Carrera> carreraSet;
 
     public Estudiante(){}
+
+    public Estudiante(String nombre, String apellido, String fecha, String genero, String documento, String ciudad, String libreta, boolean graduado,List<Carrera> carreras) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.genero = genero;
+        this.documento = documento;
+        this.ciudad = ciudad;
+        this.num_libreta = libreta;
+        this.graduado = graduado;
+        this.carreraSet = carreras;
+    }
 
     public String getNombre() {
         return nombre;
     }
 
-    public Date getFecha_nacimiento() {
+    public String getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
@@ -83,11 +95,11 @@ public class Estudiante {
         this.apellido = apellido;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public Set<Carrera> getCarreras() {
+    public List<Carrera> getCarreras() {
         return carreraSet;
     }
 
