@@ -20,9 +20,19 @@ public class DAOEstudiante {
     }
 
     public void insertEstudiante(Estudiante estudiante) {
-        this.tx.begin();
-        em.persist(estudiante);
-        tx.commit();
+        if (!tx.isActive()) { // Verificar si no hay una transacción activa
+            tx.begin();
+        }
+        try {
+            em.persist(estudiante);
+            this.tx.commit();
+        } catch (Exception e) {
+            // En caso de una excepción, revertir la transacción
+            if (this.tx != null && this.tx.isActive()) {
+                this.tx.rollback();
+                e.printStackTrace();
+            }
+        }
     }
 
     public void matricularEstudianteEnCarrera(Estudiante estudiante, Carrera carrera) {
