@@ -2,12 +2,8 @@ package tp2.factory;
 
 import tp2.dao.DAOCarrera;
 import tp2.dao.DAOEstudiante;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public abstract class FactoryEntityManager  {
 
@@ -15,7 +11,7 @@ public abstract class FactoryEntityManager  {
 
     EntityManager em;
 
-    public abstract EntityManagerFactory connect(String persistance_name) throws Exception;
+    public abstract EntityManager connect(String persistance_name) throws Exception;
 
     public abstract void close();
 
@@ -23,7 +19,7 @@ public abstract class FactoryEntityManager  {
 
     public abstract DAOCarrera getCarreraDAO(EntityManager em) throws Exception;
 
-    public static EntityManagerFactory getEntityManagerFactory (String factoryType) throws Exception {
+    public static FactoryEntityManager getEntityManagerFactory (String factoryType) throws Exception {
         switch (factoryType) {
             case "MYSQL":
                 return MySqlEntityManager.getInstance();

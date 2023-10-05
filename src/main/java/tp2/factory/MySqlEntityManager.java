@@ -6,15 +6,10 @@ import tp2.dao.DAOEstudiante;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class MySqlEntityManager extends FactoryEntityManager {
 
     private EntityManagerFactory emf;
-
     private EntityManager em;
     private static MySqlEntityManager instance;
 
@@ -27,7 +22,7 @@ public class MySqlEntityManager extends FactoryEntityManager {
         return instance;
     }
 
-    public EntityManagerFactory connect(String persistance_name) throws Exception {
+    public EntityManager connect(String persistance_name) throws Exception {
 
         try {
             this.emf = Persistence.createEntityManagerFactory(persistance_name);
@@ -37,8 +32,8 @@ public class MySqlEntityManager extends FactoryEntityManager {
             exception.printStackTrace();
         }
 
-        if (this.emf != null) {
-            return this.emf;
+        if (this.em != null) {
+            return this.em;
         } else {
             throw new Exception("No se creo la conexion");
         }
@@ -51,12 +46,12 @@ public class MySqlEntityManager extends FactoryEntityManager {
 
     @Override
     public DAOEstudiante getEstudianteDAO(EntityManager em) throws Exception {
-        return new DAOEstudiante(this.em);
+        return new DAOEstudiante(em);
     }
 
     @Override
     public DAOCarrera getCarreraDAO(EntityManager em) throws Exception {
-        return new DAOCarrera();
+        return new DAOCarrera(em);
     }
 
 }
