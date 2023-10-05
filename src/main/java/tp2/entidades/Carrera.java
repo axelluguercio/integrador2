@@ -23,6 +23,11 @@ public class Carrera {
     private List<Estudiante> estudianteSet;
 
     public Carrera(){}
+    public Carrera(String nombre, int duracion, List<Estudiante> estudianteSet) {
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.estudianteSet = estudianteSet;
+    }
 
     public String getNombre() {
         return nombre;

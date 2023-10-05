@@ -20,9 +20,11 @@ public class DAOEstudiante {
     }
 
     public void insertEstudiante(Estudiante estudiante) {
+        if(!existeEstudiante(estudiante)){
         if (!tx.isActive()) { // Verificar si no hay una transacción activa
             tx.begin();
         }
+
         try {
             em.persist(estudiante);
             this.tx.commit();
@@ -32,6 +34,9 @@ public class DAOEstudiante {
                 this.tx.rollback();
                 e.printStackTrace();
             }
+        }
+        }else{
+            throw new EntityExistsException("El estudiante ya existe");
         }
     }
 
@@ -69,6 +74,12 @@ public class DAOEstudiante {
         query.setParameter("carrera", carrera);
         query.setParameter("ciudad", ciudadResidencia);
         return query.getResultList();
+    }
+
+    public boolean existeEstudiante(Estudiante estudiante) {
+        TypedQuery<Estudiante> query = this.em.createQuery("SELECT e FROM Estudiante e WHERE e.num_libreta = :libreta", Estudiante.class);
+        query.setParameter("libreta", estudiante.getNum_libreta());
+        return !query.getResultList().isEmpty();
     }
 
 }

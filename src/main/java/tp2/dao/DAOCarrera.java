@@ -1,16 +1,21 @@
 package tp2.dao;
 
 import tp2.dto.DTOReporteCarrera;
+
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import tp2.entidades.Carrera;
 
 public class DAOCarrera {
     private EntityManager em;
-
+    private EntityTransaction tx;
     public DAOCarrera(EntityManager em){
         this.em = em;
+        this.tx = this.em.getTransaction();
     }
 
     public List<DTOReporteCarrera> getReporteCarrera() {
@@ -43,4 +48,39 @@ public class DAOCarrera {
         return reporte;
     }
 
+    public void insertCarrera(Carrera carrera){
+
+        if(!existeCarrera(carrera)){
+            if (!tx.isActive()) { // Verificar si no hay una transacción activa
+                tx.begin();
+            }
+
+            try {
+                em.persist(carrera);
+                this.tx.commit();
+            } catch (Exception e) {
+                // En caso de una excepción, revertir la transacción
+                if (this.tx != null && this.tx.isActive()) {
+                    this.tx.rollback();
+                    e.printStackTrace();
+                }
+            }
+        }else{
+            throw new EntityExistsException("La carrera ya existe");
+        }
+    }
+
+
+    public boolean existeCarrera(Carrera carrera){
+        TypedQuery<Carrera> query = this.em.createQuery("SELECT c FROM Carrera c WHERE c.nombre = :nombre", Carrera.class);
+        query.setParameter("nombre", carrera.getNombre());
+        List<Carrera> carreras = query.getResultList();
+        return !carreras.isEmpty();
+    }
+
+    public Carrera obtenerCarreraPorNombre(String ingenieriaEnSistemasDeInformacion) {
+        TypedQuery<Carrera> query = this.em.createQuery("SELECT c FROM Carrera c WHERE c.nombre = :nombre", Carrera.class);
+        query.setParameter("nombre", ingenieriaEnSistemasDeInformacion);
+        return query.getSingleResult();
+    }
 }
