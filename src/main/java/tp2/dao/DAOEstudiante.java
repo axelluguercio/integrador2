@@ -41,10 +41,31 @@ public class DAOEstudiante {
     }
 
     public void matricularEstudianteEnCarrera(Estudiante estudiante, Carrera carrera) {
-        this.tx.begin();
-        estudiante.getCarreras().add(carrera);
-        em.merge(estudiante);
-        tx.commit();
+        if(existeEstudiante(estudiante)) {
+
+
+            if (!tx.isActive()) { // Verificar si no hay una transacción activa
+                tx.begin();
+            }
+            try {
+
+
+                this.tx.begin();
+                estudiante.getCarreras().add(carrera);
+                em.merge(estudiante);
+                tx.commit();
+            }
+            catch (Exception e) {
+                // En caso de una excepción, revertir la transacción
+                if (this.tx != null && this.tx.isActive()) {
+                    this.tx.rollback();
+                    e.printStackTrace();
+                }
+            }
+        }
+        else{
+            throw new EntityExistsException("El estudiante no existe");
+        }
     }
 
     public List<Estudiante> obtenerTodosLosEstudiantesOrdenados() {
