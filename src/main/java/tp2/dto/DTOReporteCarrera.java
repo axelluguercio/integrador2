@@ -4,14 +4,14 @@ public class DTOReporteCarrera {
 
     private String nombre;
     private int anio;
-    private long inscriptos;
-    private long egresados;
+    private int inscriptos;
+    private int egresados;
 
-    public DTOReporteCarrera(String nombre, int anio, long cant_inscriptos, long cant_egresados) {
+    public DTOReporteCarrera(String nombre, int anio, int cant_inscriptos, int cant_egresados) {
         this.nombre = nombre;
         this.anio = anio;
         this.inscriptos = cant_inscriptos;
-        this.egresados = cant_inscriptos;
+        this.egresados = cant_egresados;
     }
 
     public String getNombre() {
@@ -38,11 +38,11 @@ public class DTOReporteCarrera {
         this.anio = anio;
     }
 
-    public void setInscriptos(long inscriptos) {
+    public void setInscriptos(int inscriptos) {
         this.inscriptos = inscriptos;
     }
 
-    public void setEgresados(long egresados) {
+    public void setEgresados(int egresados) {
         this.egresados = egresados;
     }
 

@@ -9,24 +9,20 @@ import java.util.List;
 public class Carrera {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_carrera")
-    private Long id;
+    private String id;
 
-    @Column(name = "nombre")
+    @Column(name = "carrera")
     private String nombre;
 
     @Column(name = "duracion")
     private int duracion;
 
-    @ManyToMany
-    private List<Estudiante> estudianteSet;
-
     public Carrera(){}
-    public Carrera(String nombre, int duracion, List<Estudiante> estudianteSet) {
+    public Carrera(String id, String nombre, int duracion) {
+        this.id = id;
         this.nombre = nombre;
         this.duracion = duracion;
-        this.estudianteSet = estudianteSet;
     }
 
     public String getNombre() {

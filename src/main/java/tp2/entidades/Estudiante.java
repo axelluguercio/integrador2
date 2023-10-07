@@ -10,57 +10,44 @@ import java.util.Date;
 
 public class Estudiante {
     @Id
-    @Column(name = "id_estudiante")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column(name = "DNI")
+    private String dni;
     @Column(name = "nombre")
     private String nombre;
 
     @Column(name = "apelllido")
     private String apellido;
 
-    @Column(name = "fecha_nacimiento")
-    private String fecha_nacimiento;
+    @Column(name = "edad")
+    private int edad;
 
     @Column(name = "genero")
     private String genero;
 
-    @Column(name = "numero_documento")
-    private String documento;
-
     @Column(name = "ciudad")
     private String ciudad;
 
-
-    @Column(name = "num_libreta")
+    @Column(name = "LU")
     private String num_libreta;
-
-    @Column(name = "graduado")
-    private boolean graduado;
-
-    @ManyToMany(mappedBy = "estudianteSet")
-    private List<Carrera> carreraSet;
 
     public Estudiante(){}
 
-    public Estudiante(String nombre, String apellido, String fecha, String genero, String documento, String ciudad, String libreta, boolean graduado,List<Carrera> carreras) {
+    public Estudiante(String documento, String nombre, String apellido, int edad, String genero, String ciudad, String libreta) {
+        this.dni = documento;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.edad = edad;
         this.genero = genero;
-        this.documento = documento;
         this.ciudad = ciudad;
         this.num_libreta = libreta;
-        this.graduado = graduado;
-        this.carreraSet = carreras;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public int getEdad() {
+        return edad;
     }
 
     public String getGenero() {
@@ -68,7 +55,7 @@ public class Estudiante {
     }
 
     public String getDocumento() {
-        return documento;
+        return dni;
     }
 
     public String getCiudad() {
@@ -77,10 +64,6 @@ public class Estudiante {
 
     public String getNum_libreta() {
         return num_libreta;
-    }
-
-    public boolean isGraduado() {
-        return graduado;
     }
 
     public String getApellido() {
@@ -95,12 +78,8 @@ public class Estudiante {
         this.apellido = apellido;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
-    }
-
-    public List<Carrera> getCarreras() {
-        return carreraSet;
+    public void setFecha_nacimiento(int edad) {
+        this.edad = edad;
     }
 
     public void setGenero(String genero) {
@@ -108,7 +87,7 @@ public class Estudiante {
     }
 
     public void setDocumento(String documento) {
-        this.documento = documento;
+        this.dni = documento;
     }
 
     public void setCiudad(String ciudad) {
@@ -119,22 +98,17 @@ public class Estudiante {
         this.num_libreta = num_libreta;
     }
 
-    public void setGraduado(boolean graduado) {
-        this.graduado = graduado;
-    }
-
     @Override
     public String toString() {
         return "Estudiante{" +
-                "id=" + id +
+                "id=" + dni +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", fecha_nacimiento=" + fecha_nacimiento +
+                ", edad=" + edad +
                 ", genero='" + genero + '\'' +
-                ", documento='" + documento + '\'' +
+                ", documento='" + dni + '\'' +
                 ", ciudad='" + ciudad + '\'' +
                 ", num_libreta='" + num_libreta + '\'' +
-                ", graduado=" + graduado +
                 '}';
     }
 }

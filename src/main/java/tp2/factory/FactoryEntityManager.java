@@ -1,7 +1,9 @@
 package tp2.factory;
 
-import tp2.dao.DAOCarrera;
-import tp2.dao.DAOEstudiante;
+import tp2.interfaces.EstudianteCarreraRepository;
+import tp2.repositories.CarreraRepositoryImpl;
+import tp2.repositories.EstudianteCarreraRepositoryImpl;
+import tp2.repositories.EstudianteRepositoryImpl;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -15,9 +17,11 @@ public abstract class FactoryEntityManager  {
 
     public abstract void close();
 
-    public abstract DAOEstudiante getEstudianteDAO(EntityManager em) throws Exception;
+    public abstract EstudianteRepositoryImpl getEstudianteRepository(EntityManager em) throws Exception;
 
-    public abstract DAOCarrera getCarreraDAO(EntityManager em) throws Exception;
+    public abstract CarreraRepositoryImpl getCarreraRepository(EntityManager em) throws Exception;
+
+    public abstract EstudianteCarreraRepositoryImpl getEstudianteCarreraRepository(EntityManager em) throws Exception;
 
     public static FactoryEntityManager getEntityManagerFactory (String factoryType) throws Exception {
         switch (factoryType) {

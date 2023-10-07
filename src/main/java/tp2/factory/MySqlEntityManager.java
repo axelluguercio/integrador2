@@ -1,7 +1,9 @@
 package tp2.factory;
 
-import tp2.dao.DAOCarrera;
-import tp2.dao.DAOEstudiante;
+import tp2.interfaces.EstudianteCarreraRepository;
+import tp2.repositories.CarreraRepositoryImpl;
+import tp2.repositories.EstudianteCarreraRepositoryImpl;
+import tp2.repositories.EstudianteRepositoryImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -45,13 +47,19 @@ public class MySqlEntityManager extends FactoryEntityManager {
     }
 
     @Override
-    public DAOEstudiante getEstudianteDAO(EntityManager em) throws Exception {
-        return new DAOEstudiante(em);
+    public EstudianteRepositoryImpl getEstudianteRepository(EntityManager em) throws Exception {
+        return new EstudianteRepositoryImpl(em);
     }
 
     @Override
-    public DAOCarrera getCarreraDAO(EntityManager em) throws Exception {
-        return new DAOCarrera(em);
+    public CarreraRepositoryImpl getCarreraRepository(EntityManager em) throws Exception {
+        return new CarreraRepositoryImpl(em);
     }
+
+    @Override
+    public EstudianteCarreraRepositoryImpl getEstudianteCarreraRepository(EntityManager em) throws Exception {
+        return new EstudianteCarreraRepositoryImpl(em);
+    }
+
 
 }
