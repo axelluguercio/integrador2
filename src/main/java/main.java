@@ -1,17 +1,12 @@
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
-import tp2.dto.DTOReporteCarrera;
-import tp2.entidades.EstudianteCarrera;
 import tp2.repositories.CarreraRepositoryImpl;
 import tp2.repositories.EstudianteCarreraRepositoryImpl;
 import tp2.repositories.EstudianteRepositoryImpl;
-import tp2.entidades.Carrera;
-import tp2.entidades.Estudiante;
 import tp2.factory.FactoryEntityManager;
 
 import javax.persistence.EntityManager;
 import java.io.FileReader;
-import java.util.List;
 
 public class main {
 
@@ -36,10 +31,24 @@ public class main {
         //carrera_repository.insert(CSV_carreras);
         //estudiante_carrera_repository.insert(CSV_estudianteCarrera);
 
-        // reporte carrera
-        List< DTOReporteCarrera> reporte_carrera = estudiante_carrera_repository.getReporteCarrera();
+        // estudiante por genero y libreta
+        //System.out.println(estudiante_repository.obtenerEstudiantePorLibreta("13413"));
+        //List<Estudiante> porgenero = estudiante_repository.obtenerEstudiantesPorGenero("Male");
 
-        System.out.println(reporte_carrera);
+        //for (Estudiante est : porgenero) {
+        //    System.out.println(est);
+        //}
+
+        // carreras con inscriptos, ordenado por cantidad de estudiantes
+        //System.out.println(carrera_repository.obtenerCarreraConEstudiantesOrdenadas());
+
+        // estudiantes de una carrera, filtrado por ciudad
+        //System.out.println(estudiante_repository.obtenerEstudiantePorCarreraYCiudad(carrera_repository.obtenerCarreraPorNombre("Ingenieria Industrial"), "Paquera"));
+
+        // reporte carrera
+        //List<DTOReporteCarrera> reporte_carrera = estudiante_carrera_repository.getReporteCarrera();
+        //System.out.println(reporte_carrera);
+
         // close
         factory_entity_manager.close();
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import tp2.dto.DTOEstudiante;
 import tp2.entidades.Carrera;
 import tp2.entidades.Estudiante;
 import tp2.interfaces.EstudianteRepository;
@@ -63,57 +64,39 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     public List<Estudiante> obtenerTodosLosEstudiantesOrdenados() {
         TypedQuery<Estudiante> query = this.em.createQuery(
-     "SELECT e FROM Estudiante e " +
-        "ORDER BY e.apellido, e.nombre",
-        Estudiante.class);
+         "SELECT e FROM Estudiante e " +
+            "ORDER BY e.apellido, e.nombre",
+            Estudiante.class);
         return query.getResultList();
     }
 
     public Estudiante obtenerEstudiantePorLibreta(String numeroLibreta) {
         TypedQuery<Estudiante> query = this.em.createQuery(
-     "SELECT e FROM Estudiante e " +
-        "WHERE e.num_libreta = :libreta",
-        Estudiante.class);
+         "SELECT e FROM Estudiante e " +
+            "WHERE e.num_libreta = :libreta",
+            Estudiante.class);
         query.setParameter("libreta", numeroLibreta);
         return query.getSingleResult();
     }
 
     public List<Estudiante> obtenerEstudiantesPorGenero(String genero) {
         TypedQuery<Estudiante> query = this.em.createQuery(
-     "SELECT e FROM Estudiante e  " +
-        "WHERE e.genero = :genero",
-        Estudiante.class);
+         "SELECT e FROM Estudiante e  " +
+            "WHERE e.genero = :genero",
+            Estudiante.class);
         query.setParameter("genero", genero);
         return query.getResultList();
     }
 
     @Override
-    public List<Estudiante> obtenerEstudiarPorCarreraYCiudad(Carrera carrera, String ciudadResidencia) {
-        TypedQuery<Estudiante> query = this.em.createQuery(
-     "SELECT e FROM Estudiante e" +
-        "JOIN e.carreras c " +
-        "WHERE c = :carrera AND e.ciudadResidencia = :ciudad",
-        Estudiante.class);
-        query.setParameter("carrera", carrera);
-        query.setParameter("ciudad", ciudadResidencia);
-        return query.getResultList();
-    }
-
-    public List<Carrera> obtenerCarrerasConEstudiantesOrdenadas() {
-        TypedQuery<Carrera> query = this.em.createQuery(
-     "SELECT c FROM Carrera c " +
-        "WHERE SIZE(c.estudiantes) > 0 " +
-        "ORDER BY SIZE(c.estudiantes) DESC",
-        Carrera.class);
-        return query.getResultList();
-    }
-
-    public List<Estudiante> obtenerEstudiantesPorCarreraYCiudad(Carrera carrera, String ciudadResidencia) {
-        TypedQuery<Estudiante> query = this.em.createQuery(
-     "SELECT e FROM Estudiante e " +
-        "JOIN e.carreras c " +
-        "WHERE c = :carrera AND e.ciudadResidencia = :ciudad",
-        Estudiante.class);
+    public List<DTOEstudiante> obtenerEstudiantePorCarreraYCiudad(Carrera carrera, String ciudadResidencia) {
+        TypedQuery<DTOEstudiante> query = this.em.createQuery(
+         "SELECT new tp2.dto.DTOEstudiante (e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_libreta, CASE WHEN ec.anio_graduacion != 0 THEN true ELSE false END) " +
+            "FROM EstudianteCarrera ec " +
+            "JOIN ec.estudiante e " +
+            "JOIN ec.carrera c " +
+            "WHERE c = :carrera AND e.ciudad = :ciudad",
+            DTOEstudiante.class);
         query.setParameter("carrera", carrera);
         query.setParameter("ciudad", ciudadResidencia);
         return query.getResultList();
@@ -121,9 +104,9 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     public boolean existeEstudiante(Estudiante estudiante) {
         TypedQuery<Estudiante> query = this.em.createQuery(
-     "SELECT e FROM Estudiante e " +
-        "WHERE e.num_libreta = :libreta ",
-        Estudiante.class);
+         "SELECT e FROM Estudiante e " +
+            "WHERE e.num_libreta = :libreta ",
+            Estudiante.class);
         query.setParameter("libreta", estudiante.getNum_libreta());
         return !query.getResultList().isEmpty();
     }

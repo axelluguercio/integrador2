@@ -26,29 +26,17 @@ public class EstudianteCarreraRepositoryImpl implements EstudianteCarreraReposit
 
     @Override
     public List<DTOReporteCarrera> getReporteCarrera() {
-        // Consulta JPQL para obtener el informe
+        // Consulta JPQL para obtener el informe de carreras
         TypedQuery<DTOReporteCarrera> query = this.em.createQuery(
-                "SELECT new DTOReporteCarrera(c.nombre, ec.anio, COUNT(e), SUM(CASE WHEN ec.anio_graduacion != 0 THEN 1 ELSE 0 END))" +
+                "SELECT new tp2.dto.DTOReporteCarrera(c.nombre, ec.anio, COUNT(e), SUM(CASE WHEN ec.anio_graduacion != 0 THEN 1 ELSE 0 END))" +
                         "FROM EstudianteCarrera ec " +
-                        "JOIN ec.carrera.id c " +
-                        "JOIN ec.estudiante.dni e " +
+                        "JOIN ec.carrera c " +
+                        "JOIN ec.estudiante e " +
                         "GROUP BY c.nombre, ec.anio " +
                         "ORDER BY c.nombre ASC, ec.anio ASC",
                 DTOReporteCarrera.class
         );
         List<DTOReporteCarrera> resultados = query.getResultList();
-        // Procesar los resultados y crear objetos ReporteCarreraDTO
-        //List<DTOReporteCarrera> reporte = new ArrayList<>();
-        /*/
-        for (Object[] resultado : resultados) {
-            String nombre = (String) resultado[0];
-            int anio = (int) resultado[1];
-            long inscriptos = (Long) resultado[2];
-            long egresados = (Long) resultado[3];
-            DTOReporteCarrera dto = new DTOReporteCarrera(nombre, anio, inscriptos, egresados);
-            reporte.add(dto);
-        }
-        /*/
         return resultados;
     }
 

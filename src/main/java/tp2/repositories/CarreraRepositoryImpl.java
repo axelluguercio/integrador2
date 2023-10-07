@@ -2,6 +2,7 @@ package tp2.repositories;
 
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import tp2.dto.DTOInscriptosCarrera;
 import tp2.dto.DTOReporteCarrera;
 
 import javax.persistence.EntityExistsException;
@@ -45,7 +46,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
     }
 
     @Override
-    public void insert(CSVParser parser) throws SQLException {
+    public void insert(CSVParser parser) {
         for (CSVRecord row : parser) {
             String id = row.get("id_carrera");
             String nombre = row.get("carrera");
@@ -59,9 +60,9 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
     public boolean existeCarrera(Carrera carrera){
         TypedQuery<Carrera> query = this.em.createQuery(
-     "SELECT c FROM Carrera " +
-        "c WHERE c.nombre = :nombre",
-        Carrera.class);
+         "SELECT c FROM Carrera c " +
+            "WHERE c.nombre = :nombre",
+            Carrera.class);
         query.setParameter("nombre", carrera.getNombre());
         List<Carrera> carreras = query.getResultList();
         return !carreras.isEmpty();
@@ -69,19 +70,22 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
     public Carrera obtenerCarreraPorNombre(String nombre) {
         TypedQuery<Carrera> query = this.em.createQuery(
-     "SELECT c FROM Carrera " +
-        "c WHERE c.nombre = :nombre",
-        Carrera.class);
+         "SELECT c FROM Carrera c " +
+            "WHERE c.nombre = :nombre",
+            Carrera.class);
         query.setParameter("nombre", nombre);
         return query.getSingleResult();
     }
 
-    public List<Carrera> obtenerCarreraConEstudiantesOrdenadas() {
-        TypedQuery<Carrera> query = this.em.createQuery(
-     "SELECT c FROM Carrera " +
-        "c WHERE SIZE(c.estudiantes) > 0 " +
-        "ORDER BY SIZE(c.estudiantes) DESC",
-        Carrera.class);
+    public List<DTOInscriptosCarrera> obtenerCarreraConEstudiantesOrdenadas() {
+        TypedQuery<DTOInscriptosCarrera> query = this.em.createQuery(
+            "SELECT new tp2.dto.DTOInscriptosCarrera(c.id, c.nombre, c.duracion, COUNT(e)) " +
+            "FROM EstudianteCarrera ec " +
+            "JOIN ec.carrera c " +
+            "JOIN ec.estudiante e " +
+            "GROUP BY c " +
+            "ORDER BY COUNT(e) DESC",
+            DTOInscriptosCarrera.class);
         return query.getResultList();
     }
 }

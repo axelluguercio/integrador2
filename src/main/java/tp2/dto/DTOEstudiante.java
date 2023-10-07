@@ -3,21 +3,34 @@ import tp2.entidades.Carrera;
 import java.util.List;
 
 public class DTOEstudiante {
-    Long id;
+    String id;
     String nombre;
     String apellido;
-    String fecha;
+    int edad;
     String genero;
-    String documento;
     String ciudad;
     String libreta;
     boolean graduado;
-    List<Carrera> carreras;
 
+    public DTOEstudiante(String dni,
+                         String nombre,
+                         String apellido,
+                         int edad,
+                         String genero,
+                         String ciudad,
+                         String num_libreta,
+                         boolean graduado){
+        this.id = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.genero = genero;
+        this.ciudad = ciudad;
+        this.libreta = num_libreta;
+        this.graduado = graduado;
+    }
 
-    public DTOEstudiante(){};
-
-    public Long getId(){
+    public String getId(){
         return id;
     }
     public String getNombre() {
@@ -28,16 +41,12 @@ public class DTOEstudiante {
         return apellido;
     }
 
-    public String getFecha() {
-        return fecha;
+    public int getFecha() {
+        return edad;
     }
 
     public String getGenero() {
         return genero;
-    }
-
-    public String getDocumento() {
-        return documento;
     }
 
     public String getCiudad() {
@@ -52,7 +61,17 @@ public class DTOEstudiante {
         return graduado;
     }
 
-    public List<Carrera> getCarreras() {
-        return carreras;
+    @Override
+    public String toString() {
+        return "DTOEstudiante{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", edad='" + edad + '\'' +
+                ", genero='" + genero + '\'' +
+                ", ciudad='" + ciudad + '\'' +
+                ", libreta='" + libreta + '\'' +
+                ", graduado=" + graduado +
+                '}';
     }
 }

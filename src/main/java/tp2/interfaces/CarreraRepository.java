@@ -1,6 +1,7 @@
 package tp2.interfaces;
 
 import org.apache.commons.csv.CSVParser;
+import tp2.dto.DTOInscriptosCarrera;
 import tp2.dto.DTOReporteCarrera;
 import tp2.entidades.Carrera;
 
@@ -16,6 +17,6 @@ public interface CarreraRepository {
 
     Carrera obtenerCarreraPorNombre(String nombre);
 
-    List<Carrera> obtenerCarreraConEstudiantesOrdenadas();
+    List<DTOInscriptosCarrera> obtenerCarreraConEstudiantesOrdenadas();
 
 }

@@ -1,6 +1,7 @@
 package tp2.interfaces;
 
 import org.apache.commons.csv.CSVParser;
+import tp2.dto.DTOEstudiante;
 import tp2.entidades.Carrera;
 import tp2.entidades.Estudiante;
 
@@ -15,7 +16,7 @@ public interface EstudianteRepository {
     List<Estudiante> obtenerTodosLosEstudiantesOrdenados();
     Estudiante obtenerEstudiantePorLibreta(String numeroLibreta);
     List<Estudiante> obtenerEstudiantesPorGenero(String genero);
-    List<Estudiante> obtenerEstudiarPorCarreraYCiudad(Carrera carrera, String ciudadResidencia);
+    List<DTOEstudiante> obtenerEstudiantePorCarreraYCiudad(Carrera carrera, String ciudadResidencia);
     boolean existeEstudiante(Estudiante estudiante);
 
 }

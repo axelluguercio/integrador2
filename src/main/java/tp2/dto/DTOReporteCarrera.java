@@ -4,10 +4,10 @@ public class DTOReporteCarrera {
 
     private String nombre;
     private int anio;
-    private int inscriptos;
-    private int egresados;
+    private long inscriptos;
+    private long egresados;
 
-    public DTOReporteCarrera(String nombre, int anio, int cant_inscriptos, int cant_egresados) {
+    public DTOReporteCarrera(String nombre, int anio, long cant_inscriptos, long cant_egresados) {
         this.nombre = nombre;
         this.anio = anio;
         this.inscriptos = cant_inscriptos;
@@ -18,7 +18,7 @@ public class DTOReporteCarrera {
         return nombre;
     }
 
-    public int getAnio() {
+    public long getAnio() {
         return anio;
     }
 
