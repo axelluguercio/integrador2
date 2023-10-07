@@ -1,5 +1,8 @@
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import tp2.dto.DTOEstudiante;
+import tp2.dto.DTOReporteCarrera;
+import tp2.entidades.Estudiante;
 import tp2.repositories.CarreraRepositoryImpl;
 import tp2.repositories.EstudianteCarreraRepositoryImpl;
 import tp2.repositories.EstudianteRepositoryImpl;
@@ -7,6 +10,7 @@ import tp2.factory.FactoryEntityManager;
 
 import javax.persistence.EntityManager;
 import java.io.FileReader;
+import java.util.List;
 
 public class main {
 
@@ -22,9 +26,9 @@ public class main {
         EstudianteCarreraRepositoryImpl estudiante_carrera_repository = factory_entity_manager.getEstudianteCarreraRepository(entity_manager);
 
         // CSV parsers
-        CSVParser CSV_carreras = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/CSV/carreras.csv"));
-        CSVParser CSV_estudiantes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/CSV/estudiantes.csv"));
-        CSVParser CSV_estudianteCarrera = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/CSV/estudianteCarrera.csv"));
+        //CSVParser CSV_carreras = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/CSV/carreras.csv"));
+        //CSVParser CSV_estudiantes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/CSV/estudiantes.csv"));
+        //CSVParser CSV_estudianteCarrera = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/CSV/estudianteCarrera.csv"));
 
         // carga de datos por csv (1 sola vez)
         //estudiante_repository.insert(CSV_estudiantes);
@@ -32,8 +36,8 @@ public class main {
         //estudiante_carrera_repository.insert(CSV_estudianteCarrera);
 
         // estudiante por genero y libreta
-        //System.out.println(estudiante_repository.obtenerEstudiantePorLibreta("13413"));
-        //List<Estudiante> porgenero = estudiante_repository.obtenerEstudiantesPorGenero("Male");
+       //System.out.println(estudiante_repository.obtenerEstudiantePorLibreta("13413"));
+       //List<Estudiante> porgenero = estudiante_repository.obtenerEstudiantesPorGenero("Male");
 
         //for (Estudiante est : porgenero) {
         //    System.out.println(est);
@@ -44,6 +48,8 @@ public class main {
 
         // estudiantes de una carrera, filtrado por ciudad
         //System.out.println(estudiante_repository.obtenerEstudiantePorCarreraYCiudad(carrera_repository.obtenerCarreraPorNombre("Ingenieria Industrial"), "Paquera"));
+        //List<DTOEstudiante> estudiante_filtrado = estudiante_repository.obtenerEstudiantePorCarreraYCiudad(carrera_repository.obtenerCarreraPorNombre("Ingenieria Industrial"), "Nishishinminato");
+        //System.out.println(estudiante_filtrado);
 
         // reporte carrera
         //List<DTOReporteCarrera> reporte_carrera = estudiante_carrera_repository.getReporteCarrera();
